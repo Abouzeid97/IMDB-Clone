@@ -9,6 +9,9 @@ class ReviewAdmin(admin.ModelAdmin):
 class WatchlistAdmin(admin.ModelAdmin):
     list_display = ("title", "id")
 
+class StreamPlatformAdmin(admin.ModelAdmin):
+    list_display = ("name", "id")
+
 admin.site.register(Watchlist, WatchlistAdmin)
-admin.site.register(StreamPlatform)
+admin.site.register(StreamPlatform, StreamPlatformAdmin)
 admin.site.register(Review, ReviewAdmin)
