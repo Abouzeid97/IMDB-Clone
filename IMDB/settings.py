@@ -130,8 +130,26 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
     # ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #    'rest_framework.authentication.TokenAuthentication',
+    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-       'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework.permissions.IsAuthenticated',
+    #   'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-       
+    'DEFAULT_THROTTLE_CLASSES': [
+        # 'rest_framework.throttling.AnonRateThrottle',
+        # 'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/day',
+        'user': '10/day',
+        'review-create': '1/day',
+        'reviewlist': '2/day',
+        'review-detail': '4/day',
+    }
+}
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKEN': True,
 }
