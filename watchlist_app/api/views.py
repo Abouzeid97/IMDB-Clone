@@ -5,9 +5,11 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from watchlist_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadOnly
 from watchlist_app.api.serializers import WatchlistSerializer, StreamPlatformSerializer, ReviewSerializer
+from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+from watchlist_app.api.pagination import watchlistpagination, watchlistlimitoffset, Cursorpage
 from watchlist_app.models import Watchlist, StreamPlatform, Review
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
-from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+
 from django_filters.rest_framework import DjangoFilterBackend
 
 class UserReview(generics.ListAPIView):
@@ -116,8 +118,9 @@ class StreamPlatformDetailAV(APIView):
 class WatchListGV(generics.ListAPIView):
     queryset = Watchlist.objects.all()
     serializer_class = WatchlistSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.OrderingFilter]
     search_fields = ['title', 'platform__name']
+    pagination_class = Cursorpage
 class WhatchlistListAV(APIView):
     permission_classes = [IsAdminOrReadOnly]
     def get(self, request):
